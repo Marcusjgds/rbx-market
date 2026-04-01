@@ -1,0 +1,1064 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>RBX Market — Modèles Roblox</title>
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Rajdhani:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --neon: #00f5ff;
+    --neon2: #ff006e;
+    --neon3: #7b2fff;
+    --bg: #05050f;
+    --bg2: #0a0a1a;
+    --card: #0d0d22;
+    --border: rgba(0,245,255,0.18);
+    --text: #e0e8ff;
+    --muted: #6a7090;
+    --robux: #ffd700;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Rajdhani', sans-serif;
+    font-size: 16px;
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background:
+      radial-gradient(ellipse at 20% 50%, rgba(123,47,255,0.08) 0%, transparent 60%),
+      radial-gradient(ellipse at 80% 20%, rgba(0,245,255,0.06) 0%, transparent 50%),
+      radial-gradient(ellipse at 60% 80%, rgba(255,0,110,0.05) 0%, transparent 50%);
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  /* ─── GRID BG ─── */
+  body::after {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(0,245,255,0.04) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(0,245,255,0.04) 1px, transparent 1px);
+    background-size: 60px 60px;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  .wrap { position: relative; z-index: 1; }
+
+  /* ─── HEADER ─── */
+  header {
+    border-bottom: 1px solid var(--border);
+    background: rgba(5,5,15,0.92);
+    backdrop-filter: blur(20px);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    padding: 0 2rem;
+  }
+
+  .header-inner {
+    max-width: 1300px;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 70px;
+    gap: 1.5rem;
+  }
+
+  .logo-area {
+    display: flex;
+    align-items: center;
+    gap: 0.9rem;
+  }
+
+  .site-logo {
+    width: 42px;
+    height: 42px;
+    border-radius: 10px;
+    object-fit: cover;
+    border: 1.5px solid var(--neon);
+    box-shadow: 0 0 14px rgba(0,245,255,0.4);
+  }
+
+  .site-logo-placeholder {
+    width: 42px;
+    height: 42px;
+    border-radius: 10px;
+    background: linear-gradient(135deg, var(--neon3), var(--neon));
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Orbitron', sans-serif;
+    font-weight: 900;
+    font-size: 14px;
+    color: #fff;
+    border: 1.5px solid var(--neon);
+    box-shadow: 0 0 14px rgba(0,245,255,0.4);
+    cursor: pointer;
+  }
+
+  .site-name {
+    font-family: 'Orbitron', sans-serif;
+    font-weight: 900;
+    font-size: 1.35rem;
+    letter-spacing: 2px;
+    background: linear-gradient(90deg, var(--neon), var(--neon3));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+
+  .nav-right {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+  }
+
+  /* ─── USER BAR ─── */
+  .user-bar {
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+    background: rgba(0,245,255,0.06);
+    border: 1px solid var(--border);
+    border-radius: 40px;
+    padding: 0.3rem 1rem 0.3rem 0.3rem;
+  }
+
+  .avatar {
+    width: 36px; height: 36px;
+    border-radius: 50%;
+    border: 2px solid var(--neon);
+    object-fit: cover;
+  }
+
+  .avatar-ph {
+    width: 36px; height: 36px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--neon3), var(--neon2));
+    border: 2px solid var(--neon);
+    display: flex; align-items: center; justify-content: center;
+    font-weight: 700; font-size: 14px; color: #fff;
+  }
+
+  .username { font-weight: 700; font-size: 0.95rem; }
+
+  .robux-badge {
+    background: rgba(255,215,0,0.12);
+    border: 1px solid rgba(255,215,0,0.35);
+    border-radius: 20px;
+    padding: 0.15rem 0.7rem;
+    color: var(--robux);
+    font-family: 'Orbitron', sans-serif;
+    font-size: 0.78rem;
+    font-weight: 700;
+    display: flex; align-items: center; gap: 0.3rem;
+  }
+
+  /* ─── BUTTONS ─── */
+  .btn {
+    font-family: 'Rajdhani', sans-serif;
+    font-weight: 700;
+    font-size: 0.95rem;
+    letter-spacing: 1px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    padding: 0.55rem 1.3rem;
+    transition: all 0.2s;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+  }
+
+  .btn-neon {
+    background: transparent;
+    border: 1.5px solid var(--neon);
+    color: var(--neon);
+    box-shadow: 0 0 12px rgba(0,245,255,0.2);
+  }
+
+  .btn-neon:hover {
+    background: rgba(0,245,255,0.1);
+    box-shadow: 0 0 24px rgba(0,245,255,0.4);
+  }
+
+  .btn-solid {
+    background: linear-gradient(135deg, var(--neon3), var(--neon));
+    color: #fff;
+    box-shadow: 0 4px 20px rgba(0,245,255,0.3);
+  }
+
+  .btn-solid:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 6px 28px rgba(0,245,255,0.5);
+  }
+
+  .btn-red {
+    background: transparent;
+    border: 1.5px solid var(--neon2);
+    color: var(--neon2);
+  }
+
+  .btn-red:hover { background: rgba(255,0,110,0.1); }
+
+  .btn-sm { padding: 0.35rem 0.9rem; font-size: 0.85rem; }
+
+  /* ─── HERO ─── */
+  .hero {
+    max-width: 1300px;
+    margin: 0 auto;
+    padding: 5rem 2rem 3rem;
+    text-align: center;
+  }
+
+  .hero h1 {
+    font-family: 'Orbitron', sans-serif;
+    font-size: clamp(2rem, 5vw, 4rem);
+    font-weight: 900;
+    line-height: 1.1;
+    margin-bottom: 1rem;
+  }
+
+  .hero h1 span {
+    background: linear-gradient(90deg, var(--neon), var(--neon3), var(--neon2));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+
+  .hero p {
+    color: var(--muted);
+    font-size: 1.15rem;
+    max-width: 600px;
+    margin: 0 auto 2.5rem;
+  }
+
+  .hero-stats {
+    display: flex;
+    justify-content: center;
+    gap: 3rem;
+    margin-top: 2rem;
+  }
+
+  .stat {
+    text-align: center;
+  }
+
+  .stat-num {
+    font-family: 'Orbitron', sans-serif;
+    font-size: 2rem;
+    font-weight: 900;
+    color: var(--neon);
+  }
+
+  .stat-label { color: var(--muted); font-size: 0.85rem; margin-top: 0.2rem; }
+
+  /* ─── MAIN GRID ─── */
+  .main {
+    max-width: 1300px;
+    margin: 0 auto;
+    padding: 0 2rem 4rem;
+    display: grid;
+    grid-template-columns: 300px 1fr;
+    gap: 2rem;
+  }
+
+  /* ─── PANELS ─── */
+  .panel {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 1.5rem;
+  }
+
+  .panel-title {
+    font-family: 'Orbitron', sans-serif;
+    font-size: 0.8rem;
+    font-weight: 700;
+    letter-spacing: 2px;
+    color: var(--neon);
+    text-transform: uppercase;
+    margin-bottom: 1.2rem;
+    padding-bottom: 0.8rem;
+    border-bottom: 1px solid var(--border);
+  }
+
+  /* ─── LOGIN PANEL ─── */
+  .login-hint {
+    font-size: 0.82rem;
+    color: var(--muted);
+    background: rgba(255,215,0,0.06);
+    border: 1px solid rgba(255,215,0,0.2);
+    border-radius: 8px;
+    padding: 0.8rem;
+    margin-bottom: 1rem;
+    line-height: 1.5;
+  }
+
+  .form-group { margin-bottom: 1rem; }
+
+  label {
+    display: block;
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--muted);
+    margin-bottom: 0.4rem;
+    letter-spacing: 0.5px;
+  }
+
+  input[type="text"],
+  input[type="number"],
+  input[type="password"],
+  textarea,
+  select {
+    width: 100%;
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 8px;
+    color: var(--text);
+    font-family: 'Rajdhani', sans-serif;
+    font-size: 0.95rem;
+    padding: 0.55rem 0.85rem;
+    transition: border-color 0.2s;
+    outline: none;
+    -webkit-appearance: none;
+  }
+
+  input:focus, textarea:focus, select:focus {
+    border-color: var(--neon);
+    box-shadow: 0 0 0 2px rgba(0,245,255,0.12);
+  }
+
+  textarea { resize: vertical; min-height: 80px; }
+
+  select option { background: #111; }
+
+  /* ─── FILE INPUT ─── */
+  .file-drop {
+    border: 2px dashed rgba(0,245,255,0.25);
+    border-radius: 10px;
+    padding: 1.5rem;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.2s;
+    position: relative;
+  }
+
+  .file-drop:hover {
+    border-color: var(--neon);
+    background: rgba(0,245,255,0.04);
+  }
+
+  .file-drop input[type="file"] {
+    position: absolute;
+    inset: 0;
+    opacity: 0;
+    cursor: pointer;
+    width: 100%;
+    height: 100%;
+  }
+
+  .file-icon { font-size: 2rem; margin-bottom: 0.5rem; }
+  .file-label { font-size: 0.85rem; color: var(--muted); }
+  .file-label strong { color: var(--neon); }
+  .file-name { font-size: 0.8rem; color: var(--neon); margin-top: 0.4rem; font-weight: 600; }
+
+  /* ─── RADIO PRICE ─── */
+  .price-toggle {
+    display: flex;
+    gap: 0.5rem;
+    margin-bottom: 0.8rem;
+  }
+
+  .price-btn {
+    flex: 1;
+    padding: 0.5rem;
+    border: 1.5px solid rgba(255,255,255,0.1);
+    border-radius: 8px;
+    background: transparent;
+    color: var(--muted);
+    font-family: 'Rajdhani', sans-serif;
+    font-weight: 700;
+    font-size: 0.9rem;
+    cursor: pointer;
+    transition: all 0.2s;
+    text-align: center;
+  }
+
+  .price-btn.active-free {
+    border-color: #00e676;
+    color: #00e676;
+    background: rgba(0,230,118,0.08);
+  }
+
+  .price-btn.active-paid {
+    border-color: var(--robux);
+    color: var(--robux);
+    background: rgba(255,215,0,0.08);
+  }
+
+  #price-input-wrap { display: none; }
+
+  /* ─── MSG ─── */
+  .msg {
+    padding: 0.7rem 1rem;
+    border-radius: 8px;
+    font-size: 0.88rem;
+    font-weight: 600;
+    margin-top: 0.8rem;
+    display: none;
+  }
+
+  .msg.ok { background: rgba(0,230,118,0.12); border: 1px solid #00e676; color: #00e676; }
+  .msg.err { background: rgba(255,0,110,0.1); border: 1px solid var(--neon2); color: var(--neon2); }
+
+  /* ─── MODELS GRID ─── */
+  .models-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 1.5rem;
+  }
+
+  .models-count {
+    font-family: 'Orbitron', sans-serif;
+    font-size: 0.75rem;
+    color: var(--muted);
+    letter-spacing: 1px;
+  }
+
+  .models-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: 1.2rem;
+  }
+
+  .model-card {
+    background: rgba(13,13,34,0.9);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    overflow: hidden;
+    transition: all 0.25s;
+    cursor: pointer;
+  }
+
+  .model-card:hover {
+    border-color: var(--neon);
+    transform: translateY(-3px);
+    box-shadow: 0 8px 30px rgba(0,245,255,0.15);
+  }
+
+  .model-thumb {
+    width: 100%;
+    height: 150px;
+    object-fit: cover;
+    display: block;
+  }
+
+  .model-thumb-ph {
+    width: 100%;
+    height: 150px;
+    background: linear-gradient(135deg, #0a0a2a, #151535);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 3rem;
+  }
+
+  .model-info { padding: 1rem; }
+
+  .model-name {
+    font-weight: 700;
+    font-size: 1rem;
+    margin-bottom: 0.3rem;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .model-author {
+    font-size: 0.78rem;
+    color: var(--muted);
+    margin-bottom: 0.7rem;
+  }
+
+  .model-footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .model-price {
+    font-family: 'Orbitron', sans-serif;
+    font-size: 0.8rem;
+    font-weight: 700;
+  }
+
+  .price-free { color: #00e676; }
+  .price-paid { color: var(--robux); }
+
+  .model-cat {
+    font-size: 0.72rem;
+    background: rgba(123,47,255,0.2);
+    border: 1px solid rgba(123,47,255,0.35);
+    border-radius: 20px;
+    padding: 0.15rem 0.55rem;
+    color: #b388ff;
+  }
+
+  .empty-state {
+    grid-column: 1/-1;
+    text-align: center;
+    padding: 4rem 2rem;
+    color: var(--muted);
+  }
+
+  .empty-state .big { font-size: 3rem; margin-bottom: 1rem; }
+  .empty-state p { font-size: 1rem; }
+
+  /* ─── LOGO SECTION ─── */
+  .logo-upload-area {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 1rem;
+  }
+
+  .current-logo-preview {
+    width: 60px;
+    height: 60px;
+    border-radius: 12px;
+    border: 2px solid var(--border);
+    object-fit: cover;
+    display: none;
+  }
+
+  /* ─── TOAST ─── */
+  #toast {
+    position: fixed;
+    bottom: 2rem;
+    right: 2rem;
+    background: var(--card);
+    border: 1px solid var(--neon);
+    border-radius: 12px;
+    padding: 1rem 1.5rem;
+    color: var(--neon);
+    font-weight: 700;
+    font-size: 0.95rem;
+    box-shadow: 0 8px 30px rgba(0,245,255,0.25);
+    transform: translateY(100px);
+    opacity: 0;
+    transition: all 0.3s;
+    z-index: 999;
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+  }
+
+  #toast.show {
+    transform: translateY(0);
+    opacity: 1;
+  }
+
+  /* ─── MODAL ─── */
+  .modal-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.75);
+    backdrop-filter: blur(6px);
+    z-index: 200;
+    display: none;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .modal-overlay.open { display: flex; }
+
+  .modal {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    width: 90%;
+    max-width: 500px;
+    padding: 2rem;
+    animation: slideUp 0.3s ease;
+  }
+
+  @keyframes slideUp {
+    from { opacity: 0; transform: translateY(30px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .modal-title {
+    font-family: 'Orbitron', sans-serif;
+    font-size: 1.1rem;
+    font-weight: 700;
+    margin-bottom: 1.5rem;
+    color: var(--neon);
+  }
+
+  .modal-close {
+    float: right;
+    background: none;
+    border: none;
+    color: var(--muted);
+    font-size: 1.3rem;
+    cursor: pointer;
+    margin-top: -0.2rem;
+  }
+
+  .modal-close:hover { color: var(--neon2); }
+
+  @media (max-width: 900px) {
+    .main { grid-template-columns: 1fr; }
+    .hero-stats { gap: 1.5rem; }
+  }
+
+  @media (max-width: 600px) {
+    header { padding: 0 1rem; }
+    .main, .hero { padding-left: 1rem; padding-right: 1rem; }
+    .site-name { font-size: 1rem; }
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<!-- ─── HEADER ─── -->
+<header>
+  <div class="header-inner">
+    <div class="logo-area">
+      {% if site_logo %}
+        <img src="/uploads/logos/{{ site_logo }}" alt="Logo" class="site-logo" id="logo-display" onclick="openLogoModal()">
+      {% else %}
+        <div class="site-logo-placeholder" id="logo-display" onclick="openLogoModal()">RBX</div>
+      {% endif %}
+      <span class="site-name">RBX MARKET</span>
+    </div>
+
+    <div class="nav-right">
+      {% if logged_in %}
+        <div class="user-bar">
+          {% if avatar %}
+            <img src="{{ avatar }}" alt="avatar" class="avatar" onerror="this.style.display='none'">
+          {% else %}
+            <div class="avatar-ph">{{ username[0]|upper }}</div>
+          {% endif %}
+          <span class="username">{{ username }}</span>
+          <div class="robux-badge">
+            <span>R$</span>
+            <span id="robux-amount">{{ robux }}</span>
+          </div>
+        </div>
+        <a href="/logout" class="btn btn-red btn-sm">Déconnexion</a>
+      {% else %}
+        <button class="btn btn-solid" onclick="openLoginModal()">🎮 Se connecter</button>
+      {% endif %}
+    </div>
+  </div>
+</header>
+
+<!-- ─── HERO ─── -->
+<div class="hero">
+  <h1>La <span>Marketplace</span><br>pour tes modèles Roblox</h1>
+  <p>Partage, vends et découvre des modèles .rbxmx de qualité pour tes jeux Roblox</p>
+  {% if not logged_in %}
+    <button class="btn btn-solid" style="font-size:1rem;padding:.75rem 2rem" onclick="openLoginModal()">
+      🚀 Commencer maintenant
+    </button>
+  {% endif %}
+  <div class="hero-stats">
+    <div class="stat">
+      <div class="stat-num" id="stat-models">{{ models|length }}</div>
+      <div class="stat-label">Modèles</div>
+    </div>
+    <div class="stat">
+      <div class="stat-num">∞</div>
+      <div class="stat-label">Creators</div>
+    </div>
+    <div class="stat">
+      <div class="stat-num" style="color:var(--neon2)">FREE</div>
+      <div class="stat-label">Plateforme</div>
+    </div>
+  </div>
+</div>
+
+<!-- ─── MAIN ─── -->
+<div class="main">
+
+  <!-- SIDEBAR -->
+  <aside>
+    {% if logged_in %}
+    <!-- Upload Modèle -->
+    <div class="panel" style="margin-bottom:1.5rem">
+      <div class="panel-title">📦 Publier un modèle</div>
+
+      <div class="form-group">
+        <label>Nom du modèle</label>
+        <input type="text" id="model-name" placeholder="Mon Super Modèle">
+      </div>
+
+      <div class="form-group">
+        <label>Description</label>
+        <textarea id="model-desc" placeholder="Décris ton modèle..."></textarea>
+      </div>
+
+      <div class="form-group">
+        <label>Catégorie</label>
+        <select id="model-cat">
+          <option>Buildings</option>
+          <option>Vehicles</option>
+          <option>Characters</option>
+          <option>Tools</option>
+          <option>Nature</option>
+          <option>UI</option>
+          <option>Scripts</option>
+          <option>Other</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label>Prix</label>
+        <div class="price-toggle">
+          <button class="price-btn active-free" id="btn-free" onclick="setPrice('free')">✅ Gratuit</button>
+          <button class="price-btn" id="btn-paid" onclick="setPrice('paid')">💰 Payant</button>
+        </div>
+        <div id="price-input-wrap">
+          <input type="number" id="model-price" placeholder="Prix en Robux" min="1">
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label>Fichier .rbxm / .rbxmx</label>
+        <div class="file-drop" id="model-drop">
+          <input type="file" id="model-file" accept=".rbxm,.rbxmx" onchange="updateFileName('model-file','model-file-name')">
+          <div class="file-icon">📁</div>
+          <div class="file-label">Glisse ici ou <strong>clique</strong></div>
+          <div class="file-name" id="model-file-name"></div>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label>Miniature (optionnel)</label>
+        <div class="file-drop">
+          <input type="file" id="thumb-file" accept="image/*" onchange="updateFileName('thumb-file','thumb-file-name')">
+          <div class="file-icon">🖼️</div>
+          <div class="file-label">Image PNG / JPG</div>
+          <div class="file-name" id="thumb-file-name"></div>
+        </div>
+      </div>
+
+      <button class="btn btn-solid" style="width:100%" onclick="uploadModel()">🚀 Publier</button>
+      <div class="msg" id="upload-msg"></div>
+    </div>
+
+    <!-- Logo -->
+    <div class="panel">
+      <div class="panel-title">🎨 Mon logo</div>
+      <div class="logo-upload-area">
+        <img id="logo-preview" src="" class="current-logo-preview">
+        <div style="flex:1">
+          <div class="file-drop">
+            <input type="file" id="logo-file" accept="image/*" onchange="updateFileName('logo-file','logo-file-name');previewLogo()">
+            <div class="file-icon">🖼️</div>
+            <div class="file-label"><strong>Upload logo</strong></div>
+            <div class="file-name" id="logo-file-name"></div>
+          </div>
+        </div>
+      </div>
+      <button class="btn btn-neon" style="width:100%" onclick="uploadLogo()">Sauvegarder logo</button>
+      <div class="msg" id="logo-msg"></div>
+    </div>
+
+    {% else %}
+    <div class="panel">
+      <div class="panel-title">🎮 Connecte-toi</div>
+      <p style="color:var(--muted);font-size:0.9rem;line-height:1.6;margin-bottom:1.2rem">
+        Connecte-toi avec ton compte Roblox pour publier des modèles, voir ton solde Robux et gérer ton profil.
+      </p>
+      <button class="btn btn-solid" style="width:100%" onclick="openLoginModal()">Se connecter</button>
+    </div>
+    {% endif %}
+  </aside>
+
+  <!-- MODELS -->
+  <section>
+    <div class="models-header">
+      <div class="panel-title" style="margin:0;border:none;padding:0">📦 Modèles disponibles</div>
+      <div class="models-count" id="models-count">{{ models|length }} MODÈLES</div>
+    </div>
+
+    <div class="models-grid" id="models-grid">
+      {% if models %}
+        {% for m in models %}
+        <div class="model-card" onclick="downloadModel({{ m.id }}, '{{ m.price_type }}')">
+          {% if m.thumbnail %}
+            <img src="/uploads/models/{{ m.thumbnail }}" class="model-thumb" alt="{{ m.name }}">
+          {% else %}
+            <div class="model-thumb-ph">📦</div>
+          {% endif %}
+          <div class="model-info">
+            <div class="model-name">{{ m.name }}</div>
+            <div class="model-author">par {{ m.author }}</div>
+            <div class="model-footer">
+              <div class="model-price {% if m.price_type == 'free' %}price-free{% else %}price-paid{% endif %}">
+                {% if m.price_type == 'free' %}GRATUIT{% else %}R$ {{ m.price }}{% endif %}
+              </div>
+              <span class="model-cat">{{ m.category }}</span>
+            </div>
+          </div>
+        </div>
+        {% endfor %}
+      {% else %}
+        <div class="empty-state">
+          <div class="big">📦</div>
+          <p>Aucun modèle pour l'instant.<br>Sois le premier à publier !</p>
+        </div>
+      {% endif %}
+    </div>
+  </section>
+</div>
+
+</div>
+
+<!-- ─── LOGIN MODAL ─── -->
+<div class="modal-overlay" id="login-modal">
+  <div class="modal">
+    <button class="modal-close" onclick="closeLoginModal()">✕</button>
+    <div class="modal-title">🎮 Connexion Roblox</div>
+
+    <div class="login-hint">
+      ⚠️ <strong>Comment obtenir ton cookie :</strong><br>
+      1. Va sur <strong>roblox.com</strong> et connecte-toi<br>
+      2. Appuie sur <strong>F12</strong> → Application → Cookies<br>
+      3. Copie la valeur de <strong>.ROBLOSECURITY</strong>
+    </div>
+
+    <div class="form-group">
+      <label>Cookie .ROBLOSECURITY</label>
+      <input type="password" id="cookie-input" placeholder="Colle ton cookie ici...">
+    </div>
+
+    <button class="btn btn-solid" style="width:100%" onclick="doLogin()">🚀 Se connecter</button>
+    <div class="msg" id="login-msg"></div>
+  </div>
+</div>
+
+<!-- ─── LOGO MODAL ─── -->
+<div class="modal-overlay" id="logo-modal">
+  <div class="modal" style="max-width:350px;text-align:center">
+    <button class="modal-close" onclick="document.getElementById('logo-modal').classList.remove('open')">✕</button>
+    <div class="modal-title">Logo du site</div>
+    <div id="logo-modal-content" style="color:var(--muted);font-size:.9rem">Aucun logo défini.<br>Connecte-toi pour en ajouter un.</div>
+  </div>
+</div>
+
+<!-- ─── TOAST ─── -->
+<div id="toast">✅ <span id="toast-text"></span></div>
+
+<script>
+  let priceType = 'free';
+
+  function setPrice(type) {
+    priceType = type;
+    const btnFree = document.getElementById('btn-free');
+    const btnPaid = document.getElementById('btn-paid');
+    const wrap = document.getElementById('price-input-wrap');
+    if (type === 'free') {
+      btnFree.className = 'price-btn active-free';
+      btnPaid.className = 'price-btn';
+      wrap.style.display = 'none';
+    } else {
+      btnFree.className = 'price-btn';
+      btnPaid.className = 'price-btn active-paid';
+      wrap.style.display = 'block';
+    }
+  }
+
+  function updateFileName(inputId, nameId) {
+    const f = document.getElementById(inputId).files[0];
+    if (f) document.getElementById(nameId).textContent = f.name;
+  }
+
+  function previewLogo() {
+    const f = document.getElementById('logo-file').files[0];
+    if (f) {
+      const url = URL.createObjectURL(f);
+      const preview = document.getElementById('logo-preview');
+      preview.src = url;
+      preview.style.display = 'block';
+    }
+  }
+
+  function showMsg(id, text, type) {
+    const el = document.getElementById(id);
+    el.textContent = text;
+    el.className = 'msg ' + type;
+    el.style.display = 'block';
+    setTimeout(() => { el.style.display = 'none'; }, 4000);
+  }
+
+  function showToast(text, err=false) {
+    const t = document.getElementById('toast');
+    document.getElementById('toast-text').textContent = text;
+    t.style.borderColor = err ? 'var(--neon2)' : 'var(--neon)';
+    t.style.color = err ? 'var(--neon2)' : 'var(--neon)';
+    t.classList.add('show');
+    setTimeout(() => t.classList.remove('show'), 3500);
+  }
+
+  function openLoginModal() {
+    document.getElementById('login-modal').classList.add('open');
+  }
+
+  function closeLoginModal() {
+    document.getElementById('login-modal').classList.remove('open');
+  }
+
+  function openLogoModal() {
+    document.getElementById('logo-modal').classList.add('open');
+  }
+
+  async function doLogin() {
+    const cookie = document.getElementById('cookie-input').value.trim();
+    if (!cookie) { showMsg('login-msg', 'Colle ton cookie .ROBLOSECURITY', 'err'); return; }
+
+    const fd = new FormData();
+    fd.append('roblosecurity', cookie);
+
+    const r = await fetch('/login', { method: 'POST', body: fd });
+    const d = await r.json();
+
+    if (d.success) {
+      closeLoginModal();
+      showToast(`Bienvenue ${d.username} ! R$ ${d.robux}`);
+      setTimeout(() => location.reload(), 1000);
+    } else {
+      showMsg('login-msg', d.error, 'err');
+    }
+  }
+
+  async function uploadModel() {
+    const name = document.getElementById('model-name').value.trim();
+    const desc = document.getElementById('model-desc').value.trim();
+    const cat = document.getElementById('model-cat').value;
+    const price = document.getElementById('model-price') ? document.getElementById('model-price').value : '0';
+    const mf = document.getElementById('model-file').files[0];
+    const tf = document.getElementById('thumb-file').files[0];
+
+    if (!name) { showMsg('upload-msg', 'Nom requis', 'err'); return; }
+    if (!mf) { showMsg('upload-msg', 'Fichier .rbxm/.rbxmx requis', 'err'); return; }
+
+    const fd = new FormData();
+    fd.append('model_name', name);
+    fd.append('description', desc);
+    fd.append('category', cat);
+    fd.append('price_type', priceType);
+    fd.append('price', price);
+    fd.append('model_file', mf);
+    if (tf) fd.append('thumbnail', tf);
+
+    const r = await fetch('/upload_model', { method: 'POST', body: fd });
+    const d = await r.json();
+
+    if (d.success) {
+      showMsg('upload-msg', '✅ Modèle publié !', 'ok');
+      showToast('Modèle publié avec succès !');
+      addModelCard(d.model);
+      document.getElementById('model-name').value = '';
+      document.getElementById('model-desc').value = '';
+    } else {
+      showMsg('upload-msg', d.error, 'err');
+    }
+  }
+
+  async function uploadLogo() {
+    const lf = document.getElementById('logo-file').files[0];
+    if (!lf) { showMsg('logo-msg', 'Sélectionne une image', 'err'); return; }
+
+    const fd = new FormData();
+    fd.append('logo', lf);
+
+    const r = await fetch('/upload_logo', { method: 'POST', body: fd });
+    const d = await r.json();
+
+    if (d.success) {
+      showMsg('logo-msg', '✅ Logo sauvegardé !', 'ok');
+      const logoEl = document.getElementById('logo-display');
+      const img = document.createElement('img');
+      img.src = '/uploads/logos/' + d.logo_path;
+      img.className = 'site-logo';
+      img.alt = 'Logo';
+      logoEl.replaceWith(img);
+      showToast('Logo mis à jour !');
+    } else {
+      showMsg('logo-msg', d.error, 'err');
+    }
+  }
+
+  function addModelCard(m) {
+    const grid = document.getElementById('models-grid');
+    // Remove empty state
+    const empty = grid.querySelector('.empty-state');
+    if (empty) empty.remove();
+
+    const price = m.price_type === 'free'
+      ? '<span class="model-price price-free">GRATUIT</span>'
+      : `<span class="model-price price-paid">R$ ${m.price}</span>`;
+
+    const thumb = m.thumbnail
+      ? `<img src="/uploads/models/${m.thumbnail}" class="model-thumb" alt="${m.name}">`
+      : `<div class="model-thumb-ph">📦</div>`;
+
+    const card = document.createElement('div');
+    card.className = 'model-card';
+    card.onclick = () => downloadModel(m.id, m.price_type);
+    card.innerHTML = `
+      ${thumb}
+      <div class="model-info">
+        <div class="model-name">${m.name}</div>
+        <div class="model-author">par ${m.author}</div>
+        <div class="model-footer">
+          ${price}
+          <span class="model-cat">${m.category}</span>
+        </div>
+      </div>`;
+    grid.prepend(card);
+
+    // Update count
+    const cnt = grid.querySelectorAll('.model-card').length;
+    document.getElementById('models-count').textContent = cnt + ' MODÈLES';
+    document.getElementById('stat-models').textContent = cnt;
+  }
+
+  function downloadModel(id, priceType) {
+    if (priceType === 'paid') {
+      showToast('Modèle payant — système de paiement Robux requis', true);
+      return;
+    }
+    window.location.href = `/download/${id}`;
+  }
+
+  // Enter key in login
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') {
+      document.getElementById('login-modal').classList.remove('open');
+      document.getElementById('logo-modal').classList.remove('open');
+    }
+  });
+</script>
+</body>
+</html>
